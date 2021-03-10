@@ -6,8 +6,10 @@ using UnityEngine;
 public class Guest : MonoBehaviour
 {
     //TODO Change to sprite instead of color
+    [Tooltip("Different colors for the guests.")]
     [SerializeField] private List<Color> colors;
-    [SerializeField] private float speed;
+    [Tooltip("Movementspeed of the guest")]
+    [SerializeField] private float movementSpeed;
 
     private SpriteRenderer spriteRenderer;
 
@@ -15,14 +17,14 @@ public class Guest : MonoBehaviour
     private Transform guestTransform;
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
         guestTransform = this.transform;
         SetSprite();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (positions != null && positions.Count > 0)
         {
@@ -36,7 +38,7 @@ public class Guest : MonoBehaviour
                 }
             }
 
-            float step = speed * Time.deltaTime;
+            float step = movementSpeed * Time.deltaTime;
 
             // move sprite towards the target location
             guestTransform.position = Vector2.MoveTowards(transform.position, positions[0], step);
