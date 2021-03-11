@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 509c6bd00794eca448fa0d4ab424695f, type: 3}
-  m_Name: Level_1
+  m_Script: {fileID: 11500000, guid: 80793f7f2e4cbb942bbab8ab4f0c3442, type: 3}
+  m_Name: LevelList
   m_EditorClassIdentifier: 
-  amountOfGuests: 3
-  objective:
-    amount: 3
-    objectiveType: 0
+  levels:
+  - {fileID: 11400000, guid: e93369bf72aa3f54c8681a4cdfee3ee6, type: 2}

@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Guest : MonoBehaviour
 {
-    //TODO Change to sprite instead of color
     [Tooltip("Different colors for the guests.")]
     [SerializeField] private List<Color> colors;
     [Tooltip("Movementspeed of the guest")]
@@ -16,14 +15,19 @@ public class Guest : MonoBehaviour
     [SerializeField] private List<Vector2> positions;
     private Transform guestTransform;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Set Transform and Sprite of the Guest
+    /// </summary>
     private void Awake()
     {
         guestTransform = this.transform;
         SetSprite();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Move the guest to the first available position
+    /// If the guest has reached the last position then the Interaciton wil start
+    /// </summary>
     private void Update()
     {
         if (positions != null && positions.Count > 0)
@@ -33,19 +37,23 @@ public class Guest : MonoBehaviour
                 positions.RemoveAt(0);
                 if (positions.Count <= 0)
                 {
-                    //Interact With object
+                    //TODO Interact With object
                     return;
                 }
             }
 
             float step = movementSpeed * Time.deltaTime;
-
-            // move sprite towards the target location
             guestTransform.position = Vector2.MoveTowards(transform.position, positions[0], step);
         }
     }
 
-    private void WalkToAndInteractWith(List<Vector2> positions, Object obj)
+    /// <summary>
+    /// Make the guest walk towards the given positions 
+    /// Interact with the given interaction when the last position has been reached
+    /// </summary>
+    /// <param name="positions">List of positions to move towards</param>
+    /// <param name="obj">Interaciton to trigger</param>
+    public void WalkToAndInteractWith(List<Vector2> positions, Object obj)
     {
         this.positions = positions;
     }
