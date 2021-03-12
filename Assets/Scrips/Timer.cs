@@ -51,11 +51,18 @@ public class Timer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Start the timer
+    /// </summary>
     public void StartTimer()
     {
         timerIsRunning = true;
     }
 
+    /// <summary>
+    /// Stop the timer
+    /// This method does not reset the timer
+    /// </summary>
     public void StopTimer()
     {
         timerIsRunning = false;
