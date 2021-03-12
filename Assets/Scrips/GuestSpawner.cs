@@ -6,17 +6,22 @@ using UnityEngine;
 public class GuestSpawner : MonoBehaviour
 {
     [Header("Guests")]
+    [Tooltip("Prefab of the Guest GameObject")]
     [SerializeField] private GameObject guestPrefab;
+    [Tooltip("GameObject that will act as the Parent of the Guest GameObject")]
     [SerializeField] private Transform guestParent;
+    [Tooltip("Spawnpoint of the guests")]
     [SerializeField] private Transform spawnpoint;
 
     [Header("Other")]
+    [Tooltip("Location to walk towards when a guest spawns")]
     [SerializeField] private Transform deskLocation;
 
     private LevelManager levelManager;
 
     private int guestsToServe;
     private Vector2 minMaxTimeNextGuest;
+    private List<Guest> guests = new List<Guest>();
 
     /// <summary>
     /// Get the current level if there is one and set local variables
@@ -30,8 +35,23 @@ public class GuestSpawner : MonoBehaviour
         {
             guestsToServe = levelManager.currentLevel.amountOfGuests;
             minMaxTimeNextGuest = levelManager.currentLevel.minMaxTimeNextGuest;
-            StartCoroutine(SpawnNextGuest());
         }
+    }
+
+    /// <summary>
+    /// Start Spawning guests by calling the SpawnNextGuest Coroutine
+    /// </summary>
+    public void StartSpawningGuests()
+    {
+        StartCoroutine(SpawnNextGuest());
+    }
+
+    /// <summary>
+    /// Start Spawning guests by stopping all the Coroutines
+    /// </summary>
+    public void StopGuests()
+    {
+        StopAllCoroutines();
     }
 
     /// <summary>
@@ -42,6 +62,7 @@ public class GuestSpawner : MonoBehaviour
         guestsToServe -= 1;
         GameObject guest = Instantiate(guestPrefab, spawnpoint.position, Quaternion.Euler(Vector3.zero), guestParent);
         Guest guestScript = guest.GetComponent<Guest>();
+        guests.Add(guestScript);
         List<Vector2> positions = new List<Vector2>() { deskLocation.position };
         guestScript.WalkToAndInteractWith(positions, null);
     }

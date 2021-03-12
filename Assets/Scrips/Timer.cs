@@ -8,7 +8,9 @@ using UnityEngine.Events;
 [RequireComponent(typeof(LevelManager))]
 public class Timer : MonoBehaviour
 {
+    [Tooltip("Textfield that shows the minutes and seconds left of the timer")]
     [SerializeField] private TextMeshProUGUI timerText;
+    [Tooltip("Clock image that displays how much time has passed")]
     [SerializeField] private Image clockImage;
 
     private LevelManager levelManager;
@@ -25,7 +27,7 @@ public class Timer : MonoBehaviour
         levelManager = GetComponent<LevelManager>();
         time = levelManager.currentLevel.timeInSeconds;
         timeRemaining = time;
-        timerIsRunning = true;
+        UpdateTimer();
     }
 
     /// <summary>
@@ -47,6 +49,16 @@ public class Timer : MonoBehaviour
                 timerIsRunning = false;
             }
         }
+    }
+
+    public void StartTimer()
+    {
+        timerIsRunning = true;
+    }
+
+    public void StopTimer()
+    {
+        timerIsRunning = false;
     }
 
     /// <summary>

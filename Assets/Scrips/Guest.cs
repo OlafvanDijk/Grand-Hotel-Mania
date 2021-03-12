@@ -12,8 +12,9 @@ public class Guest : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
-    [SerializeField] private List<Vector2> positions;
+    private List<Vector2> positions;
     private Transform guestTransform;
+    private bool canMove = true;
 
     /// <summary>
     /// Set Transform and Sprite of the Guest
@@ -30,7 +31,7 @@ public class Guest : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (positions != null && positions.Count > 0)
+        if (canMove && positions != null && positions.Count > 0)
         {
             if (guestTransform.position.x == positions[0].x && guestTransform.position.y == positions[0].y)
             {
@@ -56,6 +57,12 @@ public class Guest : MonoBehaviour
     public void WalkToAndInteractWith(List<Vector2> positions, Object obj)
     {
         this.positions = positions;
+    }
+
+    public void StopGuest()
+    {
+        canMove = false;
+        //Here is where you should stop the animator if there is one
     }
 
     /// <summary>
