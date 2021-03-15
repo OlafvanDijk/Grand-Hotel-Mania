@@ -11,7 +11,7 @@ public class GuestSpawner : MonoBehaviour
     [Tooltip("GameObject that will act as the Parent of the Guest GameObject")]
     [SerializeField] private Transform guestParent;
     [Tooltip("Spawnpoint of the guests")]
-    [SerializeField] private Transform spawnpoint;
+    [SerializeField] private NavigationPoint spawnpoint;
 
     [Header("Other")]
     [Tooltip("Location to walk towards when a guest spawns")]
@@ -52,6 +52,10 @@ public class GuestSpawner : MonoBehaviour
     public void StopGuests()
     {
         StopAllCoroutines();
+        foreach (Guest guest in guests)
+        {
+            guest.StopFromMoving();
+        }
     }
 
     /// <summary>
@@ -63,8 +67,9 @@ public class GuestSpawner : MonoBehaviour
         GameObject guest = Instantiate(guestPrefab, spawnpoint.position, Quaternion.Euler(Vector3.zero), guestParent);
         Guest guestScript = guest.GetComponent<Guest>();
         guests.Add(guestScript);
+        guestScript.SetCurrentPosition(spawnpoint.position);
         List<Vector2> positions = new List<Vector2>() { deskLocation.position };
-        guestScript.WalkToAndInteractWith(positions, null);
+        guestScript.SetRoute(positions);
     }
 
     /// <summary>

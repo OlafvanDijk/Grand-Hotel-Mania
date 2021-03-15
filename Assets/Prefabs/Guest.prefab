@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8367502053799095381}
   m_Layer: 0
   m_Name: Guest
-  m_TagString: Untagged
+  m_TagString: Guest
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,11 +95,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912cd841a327e624eb4d5783a69d26c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementSpeed: 2.5
+  currentPosition: {x: 0, y: 0}
   colors:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0.1268245, g: 0.7075472, b: 0.25412288, a: 1}
   - {r: 0.764151, g: 0, b: 0.70504487, a: 1}
-  movementSpeed: 2.5
+  CheckIn: 1
+  CheckOut: 0
 --- !u!61 &8367502053799095381
 BoxCollider2D:
   m_ObjectHideFlags: 0
