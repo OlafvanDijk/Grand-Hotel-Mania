@@ -69,7 +69,7 @@ public class GuestSpawner : MonoBehaviour
         guests.Add(guestScript);
         guestScript.SetCurrentPosition(spawnpoint.position);
         List<Vector2> positions = new List<Vector2>() { deskLocation.position };
-        guestScript.SetRoute(positions);
+        guestScript.SetRoute(positions, null);
     }
 
     /// <summary>

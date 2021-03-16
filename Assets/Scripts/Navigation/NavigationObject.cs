@@ -14,7 +14,7 @@ public class NavigationObject : MonoBehaviour
     private Transform objTransform;
     private bool canMove = true;
 
-    //TODO Object to interact with
+    private NavigationInteraction navigationInteraction;
 
     /// <summary>
     /// Set Transform of the object
@@ -41,6 +41,11 @@ public class NavigationObject : MonoBehaviour
                 if (positions.Count <= 0)
                 {
                     //TODO Interact With object
+                    if (navigationInteraction)
+                    {
+                        navigationInteraction.NavInteract(this.gameObject);
+                    }
+
                     return;
                 }
             }
@@ -56,9 +61,10 @@ public class NavigationObject : MonoBehaviour
     /// </summary>
     /// <param name="positions">List of positions to move towards</param>
     /// <param name="obj">Interaciton to trigger</param>
-    public void SetRoute(List<Vector2> positions)
+    public void SetRoute(List<Vector2> positions, NavigationInteraction interaction)
     {
         this.positions = positions;
+        navigationInteraction = interaction;
     }
 
     public void StopFromMoving()
