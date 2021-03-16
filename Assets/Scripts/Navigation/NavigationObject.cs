@@ -40,7 +40,6 @@ public class NavigationObject : MonoBehaviour
                 positions.RemoveAt(0);
                 if (positions.Count <= 0)
                 {
-                    //TODO Interact With object
                     if (navigationInteraction)
                     {
                         navigationInteraction.NavInteract(this.gameObject);
@@ -60,7 +59,7 @@ public class NavigationObject : MonoBehaviour
     /// Interact with the given interaction when the last position has been reached
     /// </summary>
     /// <param name="positions">List of positions to move towards</param>
-    /// <param name="obj">Interaciton to trigger</param>
+    /// <param name="interaction">Interaciton to trigger</param>
     public void SetRoute(List<Vector2> positions, NavigationInteraction interaction)
     {
         this.positions = positions;
@@ -71,15 +70,5 @@ public class NavigationObject : MonoBehaviour
     {
         canMove = false;
         //Here is where you should stop the animator if there is one
-    }
-
-    /// <summary>
-    /// Set current position of the Navigation object
-    /// To use the navigator this position should be a positon of a NavigationPoint
-    /// </summary>
-    /// <param name="position"></param>
-    public void SetCurrentPosition(Vector2 position)
-    {
-        currentPosition = position;
     }
 }

@@ -2,26 +2,62 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
 public class Guest : NavigationObject
 {
     [Header("Guest")]
+    [Tooltip("Bubble showing the guest wants to check in")]
+    [SerializeField] private GameObject checkInBubble;
+    [Tooltip("Bubble showing the guest wants to check out")]
+    [SerializeField] private GameObject checkOutBubble;
     [Tooltip("Different colors for the guests.")]
     [SerializeField] private List<Color> colors;
 
     [HideInInspector]
-    public bool CheckIn = true;
+    public bool checkIn = true;
     [HideInInspector]
-    public bool CheckOut = false;
+    public bool checkOut = false;
 
     private SpriteRenderer spriteRenderer;
+    private Collider2D collider;
 
     /// <summary>
     /// Set Sprite of the Guest
     /// </summary>
     private void Start()
     {
+        collider = GetComponent<Collider2D>();
         SetSprite();
+    }
+
+    public void CheckIn()
+    {
+        if (checkIn)
+        {
+            SetColliderAndBubble(true, checkInBubble, true);
+        }
+        else
+        {
+            SetColliderAndBubble(false, checkInBubble, false);
+        }
+    }
+
+    public void CheckOut()
+    {
+        if (checkOut)
+        {
+            SetColliderAndBubble(true, checkOutBubble, true);
+        }
+        else
+        {
+            SetColliderAndBubble(false, checkOutBubble, false);
+            //TODO SEND TO EXIT
+        }
+    }    
+
+    public void SetCollider(bool enable)
+    {
+        collider.enabled = enable;
     }
 
     /// <summary>
@@ -35,5 +71,11 @@ public class Guest : NavigationObject
             int index = Random.Range(0, colors.Count);
             spriteRenderer.color = colors[index];
         }
+    }
+
+    private void SetColliderAndBubble(bool collider, GameObject bubble, bool bubbleEnabled)
+    {
+        SetCollider(collider);
+        bubble.SetActive(bubbleEnabled);
     }
 }

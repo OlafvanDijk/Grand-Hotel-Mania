@@ -15,7 +15,7 @@ public class GuestSpawner : MonoBehaviour
 
     [Header("Other")]
     [Tooltip("Location to walk towards when a guest spawns")]
-    [SerializeField] private Transform deskLocation;
+    [SerializeField] private NavigationInteraction desk;
 
     private LevelManager levelManager;
 
@@ -67,9 +67,9 @@ public class GuestSpawner : MonoBehaviour
         GameObject guest = Instantiate(guestPrefab, spawnpoint.position, Quaternion.Euler(Vector3.zero), guestParent);
         Guest guestScript = guest.GetComponent<Guest>();
         guests.Add(guestScript);
-        guestScript.SetCurrentPosition(spawnpoint.position);
-        List<Vector2> positions = new List<Vector2>() { deskLocation.position };
-        guestScript.SetRoute(positions, null);
+        guestScript.currentPosition = spawnpoint.position;
+        List<Vector2> positions = new List<Vector2>() { desk.navigationPoint.position };
+        guestScript.SetRoute(positions, desk);
     }
 
     /// <summary>

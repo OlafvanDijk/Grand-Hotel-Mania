@@ -7,17 +7,18 @@ public class TouchGuest : TouchInteraction
         selectedBellhop = null;
 
         Guest guest = collider.GetComponent<Guest>();
-        if (guest.CheckIn)
+        if (guest.checkIn)
         {
             //TODO Show available rooms
 
             selectedGuest = guest;
             return;
         }
-        else if (guest.CheckOut)
+        else if (guest.checkOut)
         {
             //TODO Collect cash
-            //TODO Send to exit to despawn
+            guest.checkOut = false;
+            guest.CheckOut();
             selectedGuest = null;
             return;
         }

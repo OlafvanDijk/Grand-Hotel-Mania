@@ -9,7 +9,7 @@ public class Room : NavigationInteraction
     public bool availableToGuests = true;
 
     [SerializeField] private GameObject closedDoor;
-    [SerializeField] private NavigationPoint desk;
+    [SerializeField] private NavigationInteraction desk;
 
     private Navigator navigator;
     private Collider2D collider;
@@ -56,11 +56,9 @@ public class Room : NavigationInteraction
 
     private void InteractWithGuest(GameObject gameObject)
     {
-        Debug.Log("Interacting with: " + this.name);
         currentGuest = gameObject;
         currentGuest.SetActive(false);
-        //TODO ASK FOR COFFEE?
-        //TODO START TIMER FOR STAY
+        StartCoroutine(RestingGuest());
     }
 
     private void InteractWithBellhop(GameObject gameObject)
@@ -70,10 +68,14 @@ public class Room : NavigationInteraction
 
     private IEnumerator RestingGuest()
     {
+        //TODO ASK FOR COFFEE?
         yield return new WaitForSecondsRealtime(4f);
+        currentGuest.SetActive(true);
         DoorState(true);
         Guest guest = currentGuest.GetComponent<Guest>();
-        List<Vector2> route = navigator.GetRoute(guest.currentPosition, desk);
-        guest.SetRoute(route, null);
+        guest.checkOut = true;
+        guest.currentPosition = navigationPoint.position;
+        List<Vector2> route = navigator.GetRoute(guest.currentPosition, desk.navigationPoint);
+        guest.SetRoute(route, desk);
     }
 }

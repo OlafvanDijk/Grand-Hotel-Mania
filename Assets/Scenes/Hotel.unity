@@ -551,7 +551,7 @@ MonoBehaviour:
   navigationPoint: {fileID: 182873540}
   availableToGuests: 1
   closedDoor: {fileID: 1230878493}
-  desk: {fileID: 0}
+  desk: {fileID: 1264654605}
 --- !u!61 &171007920
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1404,7 +1404,7 @@ MonoBehaviour:
   navigationPoint: {fileID: 1745347437}
   availableToGuests: 1
   closedDoor: {fileID: 6998413}
-  desk: {fileID: 0}
+  desk: {fileID: 1264654605}
 --- !u!61 &377160290
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1530,7 +1530,7 @@ MonoBehaviour:
   navigationPoint: {fileID: 1101934366}
   availableToGuests: 1
   closedDoor: {fileID: 1906657847}
-  desk: {fileID: 0}
+  desk: {fileID: 1264654605}
 --- !u!61 &398408904
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2827,6 +2827,7 @@ MonoBehaviour:
   nodes:
   - {fileID: 1745347437}
   - {fileID: 1712189586}
+  - {fileID: 195462824}
   position: {x: 0, y: 0}
 --- !u!1 &938505232
 GameObject:
@@ -3547,6 +3548,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1264654603}
   - component: {fileID: 1264654604}
+  - component: {fileID: 1264654605}
   m_Layer: 0
   m_Name: Desk
   m_TagString: Untagged
@@ -3618,6 +3620,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1264654605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264654602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26138b6869afb28418430bb78415aa3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navigationPoint: {fileID: 421218733}
 --- !u!1 &1282561040
 GameObject:
   m_ObjectHideFlags: 0
@@ -4665,7 +4680,7 @@ MonoBehaviour:
   navigationPoint: {fileID: 667090518}
   availableToGuests: 1
   closedDoor: {fileID: 1845758278}
-  desk: {fileID: 0}
+  desk: {fileID: 1264654605}
 --- !u!61 &1652143650
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5755,7 +5770,7 @@ MonoBehaviour:
     type: 3}
   guestParent: {fileID: 1591748409}
   spawnpoint: {fileID: 1089741139}
-  deskLocation: {fileID: 421218732}
+  desk: {fileID: 1264654605}
 --- !u!114 &1994946996
 MonoBehaviour:
   m_ObjectHideFlags: 0
