@@ -9,6 +9,7 @@ public class Room : NavigationInteraction
     public bool availableToGuests = true;
 
     [SerializeField] private GameObject closedDoor;
+    [SerializeField] private GameObject cleaningSign;
     [SerializeField] private NavigationInteraction desk;
 
     [HideInInspector]
@@ -51,6 +52,12 @@ public class Room : NavigationInteraction
         }
     }
 
+    public void ShouldClean(bool shouldClean, bool cleanSign)
+    {
+        this.shouldClean = shouldClean;
+        cleaningSign.SetActive(shouldClean);
+    }
+
     private void InteractWithGuest(GameObject gameObject)
     {
         currentGuest = gameObject;
@@ -63,8 +70,7 @@ public class Room : NavigationInteraction
     {
         //TODO CLEAN ROOM COROUTINE
         Bellhop bellhop = gameObject.GetComponent<Bellhop>();
-        shouldClean = false;
-        bellhop.Interacted.Invoke();
+        StartCoroutine(CleanRoom(bellhop));
     }
 
     private void SendGuestToDesk()
@@ -84,8 +90,14 @@ public class Room : NavigationInteraction
         yield return new WaitForSecondsRealtime(4f);
         SendGuestToDesk();
         DoorState(true);
-        shouldClean = true;
-        //TODO show cleaning sign
+        ShouldClean(true, true);
         Debug.Log(this.gameObject.name + " should be cleaned");
+    }
+
+    private IEnumerator CleanRoom(Bellhop bellhop)
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        ShouldClean(false, false);
+        bellhop.Interacted.Invoke();
     }
 }
