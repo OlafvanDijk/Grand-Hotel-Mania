@@ -13,7 +13,7 @@ public class Supply : NavigationInteraction
     private IEnumerator GetSupplies(Bellhop bellhop)
     {
         yield return new WaitForSecondsRealtime(0.5f);
-        bellhop.AddItemToHands(ItemType.CleaningSupplies);
+        bellhop.itemManager.AddItemToHands(ItemType.CleaningSupplies);
         bellhop.Interacted.Invoke();
     }
 }

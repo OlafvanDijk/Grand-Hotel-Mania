@@ -59,7 +59,7 @@ public class Room : NavigationInteraction
     private void InteractWithBellhop(GameObject gameObject)
     {
         Bellhop bellhop = gameObject.GetComponent<Bellhop>();
-        if (bellhop.HasItem(ItemType.CleaningSupplies))
+        if (bellhop.itemManager.HasItem(ItemType.CleaningSupplies))
         {
             StartCoroutine(CleanRoom(bellhop));
         }
@@ -83,7 +83,6 @@ public class Room : NavigationInteraction
         SendGuestToDesk();
         DoorState(true);
         ShouldClean(true, true);
-        Debug.Log(this.gameObject.name + " should be cleaned");
     }
 
     private IEnumerator CleanRoom(Bellhop bellhop)
@@ -91,7 +90,7 @@ public class Room : NavigationInteraction
         yield return new WaitForSecondsRealtime(2f);
         ShouldClean(false, false);
         availableToGuests = true;
-        bellhop.RemoveItemFromHands(ItemType.CleaningSupplies);
+        bellhop.itemManager.RemoveItemFromHands(ItemType.CleaningSupplies);
         bellhop.Interacted.Invoke();
     }
 }

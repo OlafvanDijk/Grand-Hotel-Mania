@@ -7,25 +7,37 @@ using System.Threading.Tasks;
 public class Bellhop : NavigationObject
 {
     [Header("Bellhop Variables")]
+    [Tooltip("Reference to the navigator so the Bellhop can walk around as much as he wants")]
     [SerializeField] private Navigator navigator;
+    [Tooltip("Location where the Bellhop will stand when he has nothing to do")]
     [SerializeField] private NavigationPoint start;
+    [Tooltip("Max number of interactions to put in the Queue")]
     [SerializeField] private int maxQueue;
+    [Tooltip("Hands that hold the items of the Bellhop")]
     [SerializeField] private List<Hand> hands;
 
+    [Header("Queue Text")]
+    [Tooltip("Prefab of the Queue Text Object")]
     [SerializeField] private GameObject textPrefab;
+    [Tooltip("GameObject that will hold all the text objects")]
     [SerializeField] private Transform textParent;
 
-    private bool busy = false;
-    private Dictionary<NavigationInteraction, GameObject> interactionQueueText;
-    private List<NavigationInteraction> interactionQueue;
+    [HideInInspector]
+    public ItemManager itemManager;
 
+    private bool busy = false;
+    private List<NavigationInteraction> interactionQueue;
+    private Dictionary<NavigationInteraction, GameObject> interactionQueueText;
+
+    #region Unity Mehtods
     /// <summary>
     /// Create list and Add Listeners to the events
     /// </summary>
     private void Start()
     {
-        interactionQueueText = new Dictionary<NavigationInteraction, GameObject>();
+        itemManager = new ItemManager(hands);
         interactionQueue = new List<NavigationInteraction>();
+        interactionQueueText = new Dictionary<NavigationInteraction, GameObject>();
         Interacted.AddListener(PerformInteraction);
         Arrived.AddListener(ArrivedAtInteraction);
         currentPosition = start.position;
@@ -39,7 +51,9 @@ public class Bellhop : NavigationObject
         Interacted.RemoveListener(PerformInteraction);
         Arrived.RemoveListener(ArrivedAtInteraction);
     }
+    #endregion
 
+    #region Public Methods
     /// <summary>
     /// Add an Interaction to the queue
     /// If the bellhop isn't busy then the first task will be performed
@@ -58,39 +72,19 @@ public class Bellhop : NavigationObject
             PerformInteraction();
         }
     }
+    #endregion
 
-    public void AddItemToHands(ItemType itemType)
+    #region Private Methods
+    /// <summary>
+    /// Remove interaction from Queue and Update the UI
+    /// </summary>
+    private void ArrivedAtInteraction()
     {
-        SetItemType(ItemType.None, itemType);
-    }
-
-    public void RemoveItemFromHands(ItemType itemType)
-    {
-        SetItemType(itemType, ItemType.None);
-    }
-
-    public bool HasItem(ItemType itemType)
-    {
-        for (int i = 0; i < hands.Count; i++)
+        if (interactionQueue.Count > 0)
         {
-            if (hands[i].itemType == itemType)
-            {
-                return true;
-            }
+            interactionQueue.RemoveAt(0);
         }
-        return false;
-    }
-
-    private void SetItemType(ItemType oldType, ItemType newType)
-    {
-        for (int i = 0; i < hands.Count; i++)
-        {
-            if (hands[i].itemType == oldType)
-            {
-                hands[i].SetItemType(newType);
-                break;
-            }
-        }
+        UpdateUI();
     }
 
     /// <summary>
@@ -127,16 +121,6 @@ public class Bellhop : NavigationObject
         SetRoute(route, navigationInteraction);
     }
 
-    public void ArrivedAtInteraction()
-    {
-        if (interactionQueue.Count > 0)
-        {
-            string name = interactionQueue[0].name;
-            interactionQueue.RemoveAt(0);
-        }
-        UpdateUI();
-    }
-
     /// <summary>
     /// Updates the Queue UI on screen
     /// </summary>
@@ -146,6 +130,9 @@ public class Bellhop : NavigationObject
         SetInteractionText();
     }
 
+    /// <summary>
+    /// Removes all Interaction text objects that are no longer needed
+    /// </summary>
     private void RemoveInteractionText()
     {
         List<NavigationInteraction> toBeRemoved = new List<NavigationInteraction>();
@@ -164,6 +151,9 @@ public class Bellhop : NavigationObject
         }
     }
 
+    /// <summary>
+    /// Change Interaction Queue text to match the order of the interaction in the queue
+    /// </summary>
     private void SetInteractionText()
     {
         List<NavigationInteraction> alreadyReset = new List<NavigationInteraction>();
@@ -201,4 +191,5 @@ public class Bellhop : NavigationObject
             tmpObject.text = text;
         }
     }
+    #endregion
 }
