@@ -11,11 +11,13 @@ public class GuestSpawner : MonoBehaviour
     [Tooltip("GameObject that will act as the Parent of the Guest GameObject")]
     [SerializeField] private Transform guestParent;
     [Tooltip("Spawnpoint of the guests")]
-    [SerializeField] private NavigationPoint spawnpoint;
+    [SerializeField] private NavigationInteraction spawnpoint;
 
     [Header("Other")]
     [Tooltip("Location to walk towards when a guest spawns")]
     [SerializeField] private NavigationInteraction desk;
+    [Tooltip("Navigator to navigate the guests")]
+    [SerializeField] private Navigator navigator;
 
     private LevelManager levelManager;
 
@@ -64,10 +66,12 @@ public class GuestSpawner : MonoBehaviour
     private void SpawnGuest()
     {
         guestsToServe -= 1;
-        GameObject guest = Instantiate(guestPrefab, spawnpoint.position, Quaternion.Euler(Vector3.zero), guestParent);
-        Guest guestScript = guest.GetComponent<Guest>();
+        Vector2 position = spawnpoint.navigationPoint.position;
+        GameObject guestObject = Instantiate(guestPrefab, position, Quaternion.Euler(Vector3.zero), guestParent);
+        Guest guestScript = guestObject.GetComponent<Guest>();
         guests.Add(guestScript);
-        guestScript.currentPosition = spawnpoint.position;
+        guestScript.InitializedGuest(navigator, spawnpoint);
+        guestScript.currentPosition = position;
         List<Vector2> positions = new List<Vector2>() { desk.navigationPoint.position };
         guestScript.SetRoute(positions, desk);
     }

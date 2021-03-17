@@ -348,7 +348,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 762edc723a8550643934de6cfbf906f1, type: 3}
   m_Color: {r: 0.990566, g: 0.990566, b: 0.990566, a: 1}
   m_FlipX: 0
@@ -373,6 +373,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 2.5
+  Interacted:
+    m_PersistentCalls:
+      m_Calls: []
+  Arrived:
+    m_PersistentCalls:
+      m_Calls: []
   currentPosition: {x: 0, y: 0}
   checkInBubble: {fileID: 1802164025682238275}
   checkOutBubble: {fileID: 392400021872100560}

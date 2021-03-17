@@ -20,7 +20,9 @@ public class Guest : NavigationObject
 
     private SpriteRenderer spriteRenderer;
     private Collider2D collider;
-
+    private NavigationInteraction exit;
+    private Navigator navigator;
+    
     /// <summary>
     /// Set Sprite of the Guest
     /// </summary>
@@ -28,6 +30,12 @@ public class Guest : NavigationObject
     {
         collider = GetComponent<Collider2D>();
         SetSprite();
+    }
+
+    public void InitializedGuest(Navigator navigator, NavigationInteraction exit)
+    {
+        this.navigator = navigator;
+        this.exit = exit;
     }
 
     public void CheckIn()
@@ -52,12 +60,19 @@ public class Guest : NavigationObject
         {
             SetColliderAndBubble(false, checkOutBubble, false);
             //TODO SEND TO EXIT
+            List<Vector2> route = navigator.GetRoute(currentPosition, exit.navigationPoint);
+            SetRoute(route, exit);
         }
-    }    
+    }
 
     public void SetCollider(bool enable)
     {
         collider.enabled = enable;
+    }
+
+    public List<Vector2> GetRoute(Vector2 currentPosition, NavigationPoint navigationPoint)
+    {
+        return navigator.GetRoute(currentPosition, navigationPoint);
     }
 
     /// <summary>
@@ -73,9 +88,9 @@ public class Guest : NavigationObject
         }
     }
 
-    private void SetColliderAndBubble(bool collider, GameObject bubble, bool bubbleEnabled)
+    private void SetColliderAndBubble(bool enableCollider, GameObject bubble, bool bubbleEnabled)
     {
-        SetCollider(collider);
+        SetCollider(enableCollider);
         bubble.SetActive(bubbleEnabled);
     }
 }

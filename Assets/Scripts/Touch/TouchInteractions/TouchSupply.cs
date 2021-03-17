@@ -1,17 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class TouchSupply : TouchInteraction
 {
-    public override void TouchInteract(Collider2D collider, ref Guest selectedGuest, ref GameObject selectedBellhop, Navigator navigator)
+    public override void TouchInteract(Collider2D collider, ref Guest selectedGuest, ref Bellhop selectedBellhop)
     {
-        //Collider = supply
-        //if (selectedBellhop)
-        //{
-        //    NavigationPoint supply = collider.GetComponent<NavigationPoint>();
-        //    Vector2 position = selectedBellhop.position;
-        //    List<Vector2> navigator.GetRoute(position, supply);
-        //    selectedBellhop.SetRoute(route);
-        //}
-        throw new System.NotImplementedException();
+        if (selectedBellhop)
+        {
+            NavigationInteraction supply = collider.GetComponent<NavigationInteraction>();
+            selectedBellhop.AddInteractionToQueue(supply);
+        }
     }
 }

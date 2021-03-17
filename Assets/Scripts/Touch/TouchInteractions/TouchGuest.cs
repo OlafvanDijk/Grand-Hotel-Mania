@@ -2,7 +2,7 @@
 
 public class TouchGuest : TouchInteraction
 {
-    public override void TouchInteract(Collider2D collider, ref Guest selectedGuest, ref GameObject selectedBellhop, Navigator navigator)
+    public override void TouchInteract(Collider2D collider, ref Guest selectedGuest, ref Bellhop selectedBellhop)
     {
         selectedBellhop = null;
 

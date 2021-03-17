@@ -2,9 +2,9 @@
 
 public class TouchBellhop : TouchInteraction
 {
-    public override void TouchInteract(Collider2D collider, ref Guest selectedGuest, ref GameObject selectedBellhop, Navigator navigator)
+    public override void TouchInteract(Collider2D collider, ref Guest selectedGuest, ref Bellhop selectedBellhop)
     {
         selectedGuest = null;
-        selectedBellhop = collider.gameObject;
+        selectedBellhop = collider.GetComponent<Bellhop>();
     }
 }

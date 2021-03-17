@@ -11,7 +11,9 @@ public class Room : NavigationInteraction
     [SerializeField] private GameObject closedDoor;
     [SerializeField] private NavigationInteraction desk;
 
-    private Navigator navigator;
+    [HideInInspector]
+    public bool shouldClean = false;
+
     private Collider2D collider;
     private GameObject currentGuest;
 
@@ -49,33 +51,41 @@ public class Room : NavigationInteraction
         }
     }
 
-    public void SetNavigator(Navigator navigator)
-    {
-        this.navigator = navigator;
-    }
-
     private void InteractWithGuest(GameObject gameObject)
     {
         currentGuest = gameObject;
         currentGuest.SetActive(false);
         StartCoroutine(RestingGuest());
+        
     }
 
     private void InteractWithBellhop(GameObject gameObject)
     {
-        //TODO CHECK ROOM FOR CLEANING + CLEAN ROOM
+        //TODO CLEAN ROOM COROUTINE
+        Bellhop bellhop = gameObject.GetComponent<Bellhop>();
+        shouldClean = false;
+        bellhop.Interacted.Invoke();
+    }
+
+    private void SendGuestToDesk()
+    {
+        currentGuest.SetActive(true);
+        Guest guest = currentGuest.GetComponent<Guest>();
+        guest.checkOut = true;
+        guest.currentPosition = navigationPoint.position;
+        List<Vector2> route = guest.GetRoute(guest.currentPosition, desk.navigationPoint);
+        guest.SetRoute(route, desk);
+        guest.Interacted.Invoke();
     }
 
     private IEnumerator RestingGuest()
     {
         //TODO ASK FOR COFFEE?
         yield return new WaitForSecondsRealtime(4f);
-        currentGuest.SetActive(true);
+        SendGuestToDesk();
         DoorState(true);
-        Guest guest = currentGuest.GetComponent<Guest>();
-        guest.checkOut = true;
-        guest.currentPosition = navigationPoint.position;
-        List<Vector2> route = navigator.GetRoute(guest.currentPosition, desk.navigationPoint);
-        guest.SetRoute(route, desk);
+        shouldClean = true;
+        //TODO show cleaning sign
+        Debug.Log(this.gameObject.name + " should be cleaned");
     }
 }

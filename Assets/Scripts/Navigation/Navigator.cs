@@ -5,7 +5,17 @@ using System;
 
 public class Navigator : MonoBehaviour
 {
-    [SerializeField] private List<NavigationPoint> navigationPoints;
+    private List<NavigationPoint> navigationPoints;
+
+    private void Awake()
+    {
+        navigationPoints = new List<NavigationPoint>();
+        foreach (Transform child in transform)
+        {
+            NavigationPoint navigationPoint = child.GetComponent<NavigationPoint>();
+            navigationPoints.Add(navigationPoint);
+        }
+    }
 
     public List<Vector2> GetRoute(Vector2 from, NavigationPoint to)
     {

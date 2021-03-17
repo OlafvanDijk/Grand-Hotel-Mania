@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class NavigationObject : MonoBehaviour
 {
@@ -8,9 +9,15 @@ public class NavigationObject : MonoBehaviour
     [Tooltip("Movementspeed of the object")]
     [SerializeField] private float movementSpeed;
 
+    [Header("Navigation Events")]
+    public UnityEvent Interacted;
+    public UnityEvent Arrived;
+
     [HideInInspector]
     public Vector2 currentPosition;
+    
     protected List<Vector2> positions;
+
     private Transform objTransform;
     private bool canMove = true;
 
@@ -40,6 +47,7 @@ public class NavigationObject : MonoBehaviour
                 positions.RemoveAt(0);
                 if (positions.Count <= 0)
                 {
+                    Arrived.Invoke();
                     if (navigationInteraction)
                     {
                         navigationInteraction.NavInteract(this.gameObject);
