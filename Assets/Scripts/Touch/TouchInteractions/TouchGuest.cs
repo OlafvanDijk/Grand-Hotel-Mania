@@ -2,10 +2,8 @@
 
 public class TouchGuest : TouchInteraction
 {
-    public override void TouchInteract(Collider2D collider, ref Guest selectedGuest, ref Bellhop selectedBellhop)
+    public override void TouchInteract(Collider2D collider, ref Guest selectedGuest, ref Bellhop bellhop)
     {
-        selectedBellhop = null;
-
         Guest guest = collider.GetComponent<Guest>();
         if (guest.checkIn)
         {

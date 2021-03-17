@@ -5,10 +5,11 @@ using System;
 
 public class TouchInput : MonoBehaviour
 {
-    [SerializeField] List<TouchInteractionTag> correspondingInteractions;
+    [SerializeField] private Bellhop bellhop;
+    [SerializeField] private List<TouchInteractionTag> correspondingInteractions;
 
     private Guest selectedGuest;
-    private Bellhop selectedBellhop;
+    
 
     // Update is called once per frame
     void Update()
@@ -20,7 +21,7 @@ public class TouchInput : MonoBehaviour
             {
                 if (touchInteractionTag.tag.Equals(hit.collider.tag))
                 {
-                    touchInteractionTag.touchInteraction.TouchInteract(hit.collider, ref selectedGuest, ref selectedBellhop);
+                    touchInteractionTag.touchInteraction.TouchInteract(hit.collider, ref selectedGuest, ref bellhop);
                     return;
                 }
             }

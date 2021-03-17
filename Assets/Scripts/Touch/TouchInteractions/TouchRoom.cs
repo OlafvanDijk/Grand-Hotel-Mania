@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class TouchRoom : TouchInteraction
 {
-    public override void TouchInteract(Collider2D collider, ref Guest selectedGuest, ref Bellhop selectedBellhop)
+    public override void TouchInteract(Collider2D collider, ref Guest selectedGuest, ref Bellhop bellhop)
     {
         Room room = collider.GetComponent<Room>();
         NavigationPoint navPoint = room.navigationPoint;
-        if (selectedGuest)
+        if (selectedGuest & room.availableToGuests)
         {
             List<Vector2> route = selectedGuest.GetRoute(selectedGuest.currentPosition, navPoint);
             if (route != null)
@@ -18,11 +18,12 @@ public class TouchRoom : TouchInteraction
                 room.DoorState(false);
             }
         }
-        else if (selectedBellhop)
+        else if (bellhop)
         {
             if (room.shouldClean)
             {
-                selectedBellhop.AddInteractionToQueue(room);
+                room.availableToGuests = false;
+                bellhop.AddInteractionToQueue(room);
             }
         }
 

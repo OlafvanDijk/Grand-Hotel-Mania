@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
 public class Room : NavigationInteraction
 {
     [HideInInspector]
@@ -15,13 +14,7 @@ public class Room : NavigationInteraction
     [HideInInspector]
     public bool shouldClean = false;
 
-    private Collider2D collider;
     private GameObject currentGuest;
-
-    private void Awake()
-    {
-        collider = GetComponent<Collider2D>();
-    }
 
     public override void NavInteract(GameObject gameObject)
     {
@@ -41,13 +34,11 @@ public class Room : NavigationInteraction
         if (open)
         {
             closedDoor.SetActive(false);
-            collider.enabled = true;
             availableToGuests = true;
         }
         else
         {
             closedDoor.SetActive(true);
-            collider.enabled = false;
             availableToGuests = false;
         }
     }
@@ -63,14 +54,15 @@ public class Room : NavigationInteraction
         currentGuest = gameObject;
         currentGuest.SetActive(false);
         StartCoroutine(RestingGuest());
-        
     }
 
     private void InteractWithBellhop(GameObject gameObject)
     {
-        //TODO CLEAN ROOM COROUTINE
         Bellhop bellhop = gameObject.GetComponent<Bellhop>();
-        StartCoroutine(CleanRoom(bellhop));
+        if (bellhop.HasItem(ItemType.CleaningSupplies))
+        {
+            StartCoroutine(CleanRoom(bellhop));
+        }
     }
 
     private void SendGuestToDesk()
@@ -98,6 +90,8 @@ public class Room : NavigationInteraction
     {
         yield return new WaitForSecondsRealtime(2f);
         ShouldClean(false, false);
+        availableToGuests = true;
+        bellhop.RemoveItemFromHands(ItemType.CleaningSupplies);
         bellhop.Interacted.Invoke();
     }
 }

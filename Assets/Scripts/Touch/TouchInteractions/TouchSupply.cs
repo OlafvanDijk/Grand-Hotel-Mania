@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class TouchSupply : TouchInteraction
 {
-    public override void TouchInteract(Collider2D collider, ref Guest selectedGuest, ref Bellhop selectedBellhop)
+    public override void TouchInteract(Collider2D collider, ref Guest selectedGuest, ref Bellhop bellhop)
     {
-        if (selectedBellhop)
+        if (bellhop)
         {
+            Debug.Log("Touched");
             NavigationInteraction supply = collider.GetComponent<NavigationInteraction>();
-            selectedBellhop.AddInteractionToQueue(supply);
+            bellhop.AddInteractionToQueue(supply);
         }
     }
 }

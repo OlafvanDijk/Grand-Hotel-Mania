@@ -41,8 +41,7 @@ public class NavigationObject : MonoBehaviour
         {
             if (objTransform.position.x == positions[0].x && objTransform.position.y == positions[0].y)
             {
-                if (positions.Count == 1)
-                    currentPosition = positions[0];
+                currentPosition = positions[0];
 
                 positions.RemoveAt(0);
                 if (positions.Count <= 0)
@@ -52,7 +51,6 @@ public class NavigationObject : MonoBehaviour
                     {
                         navigationInteraction.NavInteract(this.gameObject);
                     }
-
                     return;
                 }
             }

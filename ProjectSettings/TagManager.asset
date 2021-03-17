@@ -6,8 +6,8 @@ TagManager:
   tags:
   - Guest
   - Room
-  - Bellhop
   - Supply
+  - Bellhop
   layers:
   - Default
   - TransparentFX

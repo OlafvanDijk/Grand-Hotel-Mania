@@ -1,23 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System.Threading.Tasks;
 
 public class Bellhop : NavigationObject
 {
+    [Header("Bellhop Variables")]
     [SerializeField] private Navigator navigator;
     [SerializeField] private NavigationPoint start;
+    [SerializeField] private int maxQueue;
+    [SerializeField] private List<Hand> hands;
 
-    private List<NavigationInteraction> interactionQueue;
+    [SerializeField] private GameObject textPrefab;
+    [SerializeField] private Transform textParent;
+
     private bool busy = false;
+    private Dictionary<NavigationInteraction, GameObject> interactionQueueText;
+    private List<NavigationInteraction> interactionQueue;
 
     /// <summary>
     /// Create list and Add Listeners to the events
     /// </summary>
     private void Start()
     {
+        interactionQueueText = new Dictionary<NavigationInteraction, GameObject>();
         interactionQueue = new List<NavigationInteraction>();
         Interacted.AddListener(PerformInteraction);
-        Arrived.AddListener(UpdateUI);
+        Arrived.AddListener(ArrivedAtInteraction);
         currentPosition = start.position;
     }
 
@@ -27,7 +37,7 @@ public class Bellhop : NavigationObject
     private void OnDestroy()
     {
         Interacted.RemoveListener(PerformInteraction);
-        Arrived.RemoveListener(UpdateUI);
+        Arrived.RemoveListener(ArrivedAtInteraction);
     }
 
     /// <summary>
@@ -37,15 +47,49 @@ public class Bellhop : NavigationObject
     /// <param name="navigationInteraction">Interaction to add</param>
     public void AddInteractionToQueue(NavigationInteraction navigationInteraction)
     {
-        if (navigationInteraction)
+        if (navigationInteraction && interactionQueue.Count < maxQueue)
         {
             interactionQueue.Add(navigationInteraction);
             UpdateUI();
         }
 
-        if(!busy)
+        if (!busy)
         {
             PerformInteraction();
+        }
+    }
+
+    public void AddItemToHands(ItemType itemType)
+    {
+        SetItemType(ItemType.None, itemType);
+    }
+
+    public void RemoveItemFromHands(ItemType itemType)
+    {
+        SetItemType(itemType, ItemType.None);
+    }
+
+    public bool HasItem(ItemType itemType)
+    {
+        for (int i = 0; i < hands.Count; i++)
+        {
+            if (hands[i].itemType == itemType)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void SetItemType(ItemType oldType, ItemType newType)
+    {
+        for (int i = 0; i < hands.Count; i++)
+        {
+            if (hands[i].itemType == oldType)
+            {
+                hands[i].SetItemType(newType);
+                break;
+            }
         }
     }
 
@@ -63,7 +107,6 @@ public class Bellhop : NavigationObject
             busy = true;
             navigationInteraction = interactionQueue[0];
             navigationPoint = navigationInteraction.navigationPoint;
-            interactionQueue.RemoveAt(0);
         }
         else
         {
@@ -71,9 +114,27 @@ public class Bellhop : NavigationObject
             navigationPoint = start;
         }
 
-        Vector2 position = currentPosition;
-        List<Vector2> route = navigator.GetRoute(position, navigationPoint);
+        List<Vector2> route = new List<Vector2>();
+        if (currentPosition == navigationPoint.position)
+        {
+            route = new List<Vector2>() { currentPosition };
+        }
+        else
+        {
+            Vector2 position = currentPosition;
+            route = navigator.GetRoute(position, navigationPoint);
+        }
         SetRoute(route, navigationInteraction);
+    }
+
+    public void ArrivedAtInteraction()
+    {
+        if (interactionQueue.Count > 0)
+        {
+            string name = interactionQueue[0].name;
+            interactionQueue.RemoveAt(0);
+        }
+        UpdateUI();
     }
 
     /// <summary>
@@ -81,8 +142,63 @@ public class Bellhop : NavigationObject
     /// </summary>
     private void UpdateUI()
     {
-        //TODO make and update UI
-        Debug.Log("Update UI");
+        RemoveInteractionText();
+        SetInteractionText();
     }
 
+    private void RemoveInteractionText()
+    {
+        List<NavigationInteraction> toBeRemoved = new List<NavigationInteraction>();
+        foreach (NavigationInteraction interaction in interactionQueueText.Keys)
+        {
+            if (!interactionQueue.Contains(interaction))
+            {
+                toBeRemoved.Add(interaction);
+            }
+        }
+
+        foreach (NavigationInteraction interaction in toBeRemoved)
+        {
+            Destroy(interactionQueueText[interaction]);
+            interactionQueueText.Remove(interaction);
+        }
+    }
+
+    private void SetInteractionText()
+    {
+        List<NavigationInteraction> alreadyReset = new List<NavigationInteraction>();
+        for (int i = 0; i < interactionQueue.Count; i++)
+        {
+            NavigationInteraction interaction = interactionQueue[i];
+            string text = string.Empty;
+            TextMeshPro tmpObject = null;
+
+            if (!interactionQueueText.ContainsKey(interaction))
+            {
+                GameObject textObject = Instantiate(textPrefab, interaction.navigationPoint.position, Quaternion.Euler(Vector3.zero), textParent);
+                interactionQueueText.Add(interaction, textObject);
+                tmpObject = textObject.GetComponentInChildren<TextMeshPro>();
+                text = "(";
+            }
+            else
+            {
+                tmpObject = interactionQueueText[interaction].GetComponentInChildren<TextMeshPro>();
+                if (alreadyReset.Contains(interaction))
+                {
+                    text = tmpObject.text;
+                    text = text.Trim(')');
+                    text += "+";
+                }
+                else
+                {
+                    text = "(";
+                    alreadyReset.Add(interaction);
+                }
+            }
+
+            int queueCount = i + 1;
+            text += queueCount + ")";
+            tmpObject.text = text;
+        }
+    }
 }
