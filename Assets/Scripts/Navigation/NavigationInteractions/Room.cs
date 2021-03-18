@@ -9,6 +9,7 @@ public class Room : NavigationInteraction
 
     [SerializeField] private GameObject closedDoor;
     [SerializeField] private GameObject cleaningSign;
+    [SerializeField] private GameObject highlightObject;
     [SerializeField] private NavigationInteraction desk;
 
     [HideInInspector]
@@ -49,6 +50,15 @@ public class Room : NavigationInteraction
         cleaningSign.SetActive(shouldClean);
     }
 
+    public void HighlightRoom(bool highlight)
+    {
+        if (highlight)
+        {
+            highlight = availableToGuests;
+        }
+        highlightObject.SetActive(highlight);
+    }
+
     private void InteractWithGuest(GameObject gameObject)
     {
         currentGuest = gameObject;
@@ -59,9 +69,13 @@ public class Room : NavigationInteraction
     private void InteractWithBellhop(GameObject gameObject)
     {
         Bellhop bellhop = gameObject.GetComponent<Bellhop>();
-        if (bellhop.itemManager.HasItem(ItemType.CleaningSupplies))
+        if (bellhop.itemManager.HasItem(ItemType.CleaningSupplies) && shouldClean)
         {
             StartCoroutine(CleanRoom(bellhop));
+        }
+        else
+        {
+            bellhop.Interacted.Invoke();
         }
     }
 

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Supply : NavigationInteraction
 {
+    [Range(0, 1)]
+    [SerializeField] private float secondsToWait;
+
     public override void NavInteract(GameObject gameObject)
     {
         Bellhop bellhop = gameObject.GetComponent<Bellhop>();
@@ -12,7 +15,7 @@ public class Supply : NavigationInteraction
 
     private IEnumerator GetSupplies(Bellhop bellhop)
     {
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(secondsToWait);
         bellhop.itemManager.AddItemToHands(ItemType.CleaningSupplies);
         bellhop.Interacted.Invoke();
     }

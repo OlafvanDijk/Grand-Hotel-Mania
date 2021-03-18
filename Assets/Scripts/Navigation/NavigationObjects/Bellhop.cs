@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 public class Bellhop : NavigationObject
 {
     [Header("Bellhop Variables")]
-    [Tooltip("Reference to the navigator so the Bellhop can walk around as much as he wants")]
+    [Tooltip("Reference to the navigator so the Bellhop can walk around as much as he wants.")]
     [SerializeField] private Navigator navigator;
-    [Tooltip("Location where the Bellhop will stand when he has nothing to do")]
+    [Tooltip("Location where the Bellhop will stand at the beginning of the game.")]
     [SerializeField] private NavigationPoint start;
-    [Tooltip("Max number of interactions to put in the Queue")]
+    [Tooltip("Max number of interactions to put in the Queue.")]
     [SerializeField] private int maxQueue;
-    [Tooltip("Hands that hold the items of the Bellhop")]
+    [Tooltip("Hands that hold the items of the Bellhop.")]
     [SerializeField] private List<Hand> hands;
 
     [Header("Queue Text")]
@@ -31,7 +31,7 @@ public class Bellhop : NavigationObject
 
     #region Unity Mehtods
     /// <summary>
-    /// Create list and Add Listeners to the events
+    /// Create list and Add Listeners to the events.
     /// </summary>
     private void Start()
     {
@@ -44,7 +44,7 @@ public class Bellhop : NavigationObject
     }
 
     /// <summary>
-    /// Remove listeners
+    /// Remove listeners.
     /// </summary>
     private void OnDestroy()
     {
@@ -55,8 +55,8 @@ public class Bellhop : NavigationObject
 
     #region Public Methods
     /// <summary>
-    /// Add an Interaction to the queue
-    /// If the bellhop isn't busy then the first task will be performed
+    /// Add an Interaction to the queue.
+    /// If the bellhop isn't busy then the first task will be performed.
     /// </summary>
     /// <param name="navigationInteraction">Interaction to add</param>
     public void AddInteractionToQueue(NavigationInteraction navigationInteraction)
@@ -76,7 +76,7 @@ public class Bellhop : NavigationObject
 
     #region Private Methods
     /// <summary>
-    /// Remove interaction from Queue and Update the UI
+    /// Remove interaction from Queue and Update the UI.
     /// </summary>
     private void ArrivedAtInteraction()
     {
@@ -88,8 +88,8 @@ public class Bellhop : NavigationObject
     }
 
     /// <summary>
-    /// Perform the next available Interaction
-    /// When no Interactions are available then busy gets set to false
+    /// Perform the next available Interaction.
+    /// When no Interactions are available then busy gets set to false.
     /// </summary>
     private void PerformInteraction()
     {
@@ -105,7 +105,7 @@ public class Bellhop : NavigationObject
         else
         {
             busy = false;
-            navigationPoint = start;
+            return;
         }
 
         List<Vector2> route = new List<Vector2>();
@@ -122,7 +122,7 @@ public class Bellhop : NavigationObject
     }
 
     /// <summary>
-    /// Updates the Queue UI on screen
+    /// Updates the Queue UI on screen.
     /// </summary>
     private void UpdateUI()
     {
@@ -131,7 +131,7 @@ public class Bellhop : NavigationObject
     }
 
     /// <summary>
-    /// Removes all Interaction text objects that are no longer needed
+    /// Removes all Interaction text objects that are no longer needed.
     /// </summary>
     private void RemoveInteractionText()
     {
@@ -152,7 +152,7 @@ public class Bellhop : NavigationObject
     }
 
     /// <summary>
-    /// Change Interaction Queue text to match the order of the interaction in the queue
+    /// Change Interaction Queue text to match the order of the interaction in the queue.
     /// </summary>
     private void SetInteractionText()
     {

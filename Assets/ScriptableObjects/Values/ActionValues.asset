@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 509c6bd00794eca448fa0d4ab424695f, type: 3}
-  m_Name: Level_1
+  m_Script: {fileID: 11500000, guid: 064bbe6a4064b994183f78f69c7fb34d, type: 3}
+  m_Name: ActionValues
   m_EditorClassIdentifier: 
-  amountOfGuests: 4
-  timeInSeconds: 120
-  minMaxTimeNextGuest: {x: 10, y: 20}
-  objective:
-    amount: 60
-    objective: {fileID: 11400000, guid: 09a3435d6da96bd4f950a5376b02525f, type: 2}
+  checkInCost: 12
+  checkOutCost: 12
+  coffeeCost: 5

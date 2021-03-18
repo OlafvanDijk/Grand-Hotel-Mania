@@ -9,5 +9,5 @@ public class Level : ScriptableObject
     public int amountOfGuests = 3;
     public float timeInSeconds = 180f;
     public Vector2 minMaxTimeNextGuest;
-    public Objective objective;
+    public ObjectiveObject objective;
 }

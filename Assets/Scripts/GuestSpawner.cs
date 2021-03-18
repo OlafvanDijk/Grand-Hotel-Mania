@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 [RequireComponent(typeof(LevelManager))]
 public class GuestSpawner : MonoBehaviour
@@ -12,6 +13,8 @@ public class GuestSpawner : MonoBehaviour
     [SerializeField] private Transform guestParent;
     [Tooltip("Spawnpoint of the guests")]
     [SerializeField] private NavigationInteraction spawnpoint;
+    [Tooltip("Displays how many more guests will spawn")]
+    [SerializeField] private TextMeshProUGUI guestsText;
 
     [Header("Other")]
     [Tooltip("Location to walk towards when a guest spawns")]
@@ -30,12 +33,11 @@ public class GuestSpawner : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        //TODO SET UI (Guests to serve)
-
         levelManager = GetComponent<LevelManager>();
         if (levelManager.currentLevel)
         {
             guestsToServe = levelManager.currentLevel.amountOfGuests;
+            guestsText.text = guestsToServe.ToString();
             minMaxTimeNextGuest = levelManager.currentLevel.minMaxTimeNextGuest;
         }
     }
@@ -74,6 +76,7 @@ public class GuestSpawner : MonoBehaviour
         guestScript.currentPosition = position;
         List<Vector2> positions = new List<Vector2>() { desk.navigationPoint.position };
         guestScript.SetRoute(positions, desk);
+        guestsText.text = guestsToServe.ToString();
     }
 
     /// <summary>

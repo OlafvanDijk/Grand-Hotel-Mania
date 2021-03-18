@@ -24,8 +24,6 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         SetCurrentLevel();
-
-        //TODO SET UI (Objective)
     }
 
     /// <summary>

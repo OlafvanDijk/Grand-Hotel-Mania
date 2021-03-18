@@ -2,19 +2,19 @@
 
 public class TouchGuest : TouchInteraction
 {
-    public override void TouchInteract(Collider2D collider, ref Guest selectedGuest, ref Bellhop bellhop)
+    public override void TouchInteract(Collider2D collider, MoneyHandler moneyHandler, ObjectiveHandler objectiveHandler, ref Guest selectedGuest, ref Bellhop bellhop)
     {
         Guest guest = collider.GetComponent<Guest>();
         if (guest.checkIn)
         {
-            //TODO Show available rooms
-
             selectedGuest = guest;
+            selectedGuest.navigator.HighlightRooms(true);
             return;
         }
         else if (guest.checkOut)
         {
-            //TODO Collect cash
+            moneyHandler.CheckOut();
+            objectiveHandler.AddObjectiveAmount(1, ObjectiveType.Keys);
             guest.checkOut = false;
             guest.CheckOut();
             selectedGuest = null;

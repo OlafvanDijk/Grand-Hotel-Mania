@@ -18,10 +18,11 @@ public class Guest : NavigationObject
     [HideInInspector]
     public bool checkOut = false;
 
+    public Navigator navigator { get; private set; }
+
     private SpriteRenderer spriteRenderer;
     private Collider2D collider;
     private NavigationInteraction exit;
-    private Navigator navigator;
     
     /// <summary>
     /// Set Sprite of the Guest
@@ -59,7 +60,6 @@ public class Guest : NavigationObject
         else
         {
             SetColliderAndBubble(false, checkOutBubble, false);
-            //TODO SEND TO EXIT
             List<Vector2> route = navigator.GetRoute(currentPosition, exit.navigationPoint);
             SetRoute(route, exit);
         }
