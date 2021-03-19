@@ -27,6 +27,7 @@ public class GuestSpawner : MonoBehaviour
     private Vector2 minMaxTimeNextGuest;
     private List<Guest> guests = new List<Guest>();
 
+    #region Unity methods
     /// <summary>
     /// Get the current level if there is one and set local variables.
     /// </summary>
@@ -39,7 +40,9 @@ public class GuestSpawner : MonoBehaviour
             minMaxTimeNextGuest = levelManager.currentLevel.minMaxTimeNextGuest;
         }
     }
+    #endregion
 
+    #region Public Methods
     /// <summary>
     /// Start Spawning guests by calling the SpawnNextGuest Coroutine.
     /// </summary>
@@ -78,6 +81,11 @@ public class GuestSpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Removes Guest from the guest list.
+    /// Check if the game can be ended.
+    /// </summary>
+    /// <param name="guest">Guest to Remove.</param>
     public void GuestLeft(Guest guest)
     {
         guests.Remove(guest);
@@ -86,7 +94,9 @@ public class GuestSpawner : MonoBehaviour
             levelManager.EndGame();
         }
     }
+    #endregion
 
+    #region Private Methods
     /// <summary>
     /// Spawn Guest and have the guest walk to the desk.
     /// </summary>
@@ -103,7 +113,9 @@ public class GuestSpawner : MonoBehaviour
         guestScript.SetRoute(positions, desk);
         guestsText.text = guestsToServe.ToString();
     }
+    #endregion
 
+    #region IEnumerator Methods
     /// <summary>
     /// Coroutine that spawns a guest and calls itself after waiting for a certain amount of time until no guests are left to spawn.
     /// </summary>
@@ -118,4 +130,5 @@ public class GuestSpawner : MonoBehaviour
             StartCoroutine(SpawnNextGuest());
         }
     }
+    #endregion
 }

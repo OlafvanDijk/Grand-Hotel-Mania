@@ -18,13 +18,13 @@ public class NavigationObject : MonoBehaviour
     
     protected List<Vector2> positions;
 
-    private Transform objTransform;
     private bool canMove = true;
-
+    private Transform objTransform;
     private NavigationInteraction navigationInteraction;
 
+    #region Unity Methods
     /// <summary>
-    /// Set Transform of the object
+    /// Set Transform of the object.
     /// </summary>
     private void Awake()
     {
@@ -32,8 +32,8 @@ public class NavigationObject : MonoBehaviour
     }
 
     /// <summary>
-    /// Move the object to the first available position
-    /// If the object has reached the last position then the Interaciton wil start
+    /// Move the object to the first available position.
+    /// If the object has reached the last position then the Interaciton wil start.
     /// </summary>
     private void Update()
     {
@@ -59,28 +59,37 @@ public class NavigationObject : MonoBehaviour
             objTransform.position = Vector2.MoveTowards(transform.position, positions[0], step);
         }
     }
+    #endregion
 
+    #region Public Methods
     /// <summary>
-    /// Make the guest walk towards the given positions 
-    /// Interact with the given interaction when the last position has been reached
+    /// Make the guest walk towards the given positions.
+    /// Interact with the given interaction when the last position has been reached.
     /// </summary>
-    /// <param name="positions">List of positions to move towards</param>
-    /// <param name="interaction">Interaciton to trigger</param>
+    /// <param name="positions">List of positions to move towards.</param>
+    /// <param name="interaction">Interaciton to trigger.</param>
     public void SetRoute(List<Vector2> positions, NavigationInteraction interaction)
     {
         this.positions = positions;
         navigationInteraction = interaction;
     }
 
+    /// <summary>
+    /// Stop NavigationObject from moving.
+    /// </summary>
     public void StopFromMoving()
     {
         canMove = false;
         //Here is where you should stop the animator if there is one
     }
 
+    /// <summary>
+    /// Enable the NavigationObject's movement.
+    /// </summary>
     public void EnableMoving()
     {
         canMove = true;
         //Here is where you should start the animator if there is one
     }
+    #endregion
 }

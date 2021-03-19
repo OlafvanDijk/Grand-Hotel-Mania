@@ -6,9 +6,10 @@ using System;
 [CreateAssetMenu(fileName = "LevelList", menuName = "ScriptableObjects/Level/Create Level List", order = 1)]
 public class LevelList : ScriptableObject
 {
-    [Tooltip("List of all the playable levels")]
+    [Tooltip("List of all the playable levels.")]
     [SerializeField] private List<Level> levels;
 
+    #region Public Methods
     /// <summary>
     /// Get the level at the given index
     /// returns null if no level at that index was found
@@ -30,4 +31,5 @@ public class LevelList : ScriptableObject
             return null;
         }
     }
+    #endregion
 }

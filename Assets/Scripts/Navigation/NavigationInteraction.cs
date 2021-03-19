@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class NavigationInteraction : MonoBehaviour
 {
+    [Tooltip("Corresponding NavigationPoint.")]
     public NavigationPoint navigationPoint;
 
     public abstract void NavInteract(GameObject gameObject);

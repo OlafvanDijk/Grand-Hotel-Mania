@@ -19,10 +19,11 @@ public class LevelManager : MonoBehaviour
     public UnityEvent LevelCompleted;
 
     [HideInInspector]
-    public Level currentLevel;
+    public Level currentLevel { get; private set; }
 
     private bool objectiveReached = false;
 
+    #region Unity Methods
     /// <summary>
     /// Set current level and set the Objective UI.
     /// </summary>
@@ -38,34 +39,31 @@ public class LevelManager : MonoBehaviour
     {
         StartCoroutine(StartWithDelay());
     }
+    #endregion
 
+    #region Public Methods
+    #region GameState Methods
+    /// <summary>
+    /// Set the timescale to 0.
+    /// This method is called when the PauseGame is invoked.
+    /// </summary>
     public void Pause()
     {
         Time.timeScale = 0;
     }
 
+    /// <summary>
+    /// Set the timescale back to 1.
+    /// This method is called when the UnPauseGame is invoked.
+    /// </summary>
     public void UnPause()
     {
         Time.timeScale = 1;
     }
 
-    public void LoadLevel()
-    {
-        int index = PlayerPrefs.GetInt("Level");
-        if (objectiveReached)
-        {
-            PlayerPrefs.SetInt("Level", index + 1);
-        }
-
-        Time.timeScale = 1;
-        SceneManager.LoadScene(0);
-    }
-
-    public void ObjectiveReached(bool objectiveReached)
-    {
-        this.objectiveReached = objectiveReached;
-    }
-
+    /// <summary>
+    /// Ends the game. LevelCompleted or GameOver will be invoke based on the boolean objectiveReached.
+    /// </summary>
     public void EndGame()
     {
         if (objectiveReached)
@@ -77,7 +75,35 @@ public class LevelManager : MonoBehaviour
             GameOver.Invoke();
         }
     }
+    #endregion
 
+    /// <summary>
+    /// Changes the state of objectiveReached with the given value.
+    /// </summary>
+    /// <param name="objectiveReached">Has the objective been reached?</param>
+    public void ObjectiveReached(bool objectiveReached)
+    {
+        this.objectiveReached = objectiveReached;
+    }
+
+    /// <summary>
+    /// Loads or reloads the level based on the objectiveReached boolean.
+    /// Sets TimeScale to 1.
+    /// </summary>
+    public void LoadLevel()
+    {
+        int index = PlayerPrefs.GetInt("Level");
+        if (objectiveReached)
+        {
+            PlayerPrefs.SetInt("Level", index + 1);
+        }
+
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
+    }
+    #endregion
+
+    #region Private Methods
     /// <summary>
     /// Get the current level index from the player prefs.
     /// Destory this gameobject if GetLevelAtIndex returns null.
@@ -90,7 +116,9 @@ public class LevelManager : MonoBehaviour
         if (!currentLevel)
             Destroy(this.gameObject);
     }
+    #endregion
 
+    #region IEnumerators
     /// <summary>
     /// Invoke StartGame Event after a small delay.
     /// </summary>
@@ -100,4 +128,5 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(delayBeforeStart);
         StartGame.Invoke();
     }
+    #endregion
 }

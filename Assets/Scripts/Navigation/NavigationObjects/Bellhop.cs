@@ -23,7 +23,7 @@ public class Bellhop : NavigationObject
     [SerializeField] private Transform textParent;
 
     [HideInInspector]
-    public ItemManager itemManager;
+    public ItemManager itemManager { get; private set; }
 
     private bool busy = false;
     private List<NavigationInteraction> interactionQueue;

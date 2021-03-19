@@ -10,6 +10,7 @@ public class Navigator : MonoBehaviour
 
     private List<NavigationPoint> navigationPoints;
 
+    #region Unity Methods
     /// <summary>
     /// Get all NavigationPoints in children.
     /// </summary>
@@ -17,7 +18,10 @@ public class Navigator : MonoBehaviour
     {
         navigationPoints = gameObject.GetComponentsInChildren<NavigationPoint>().ToList();
     }
+    #endregion
 
+    #region Public Methods
+    #region Route Methods
     /// <summary>
     /// Get route from the current Vector2 position to the given navigation point.
     /// </summary>
@@ -54,15 +58,15 @@ public class Navigator : MonoBehaviour
     public List<NavigationPoint> GetRoute(NavigationPoint currentPoint, NavigationPoint goal, List<NavigationPoint> currentRoute = null)
     {
         //If goal is in neighbours return list
-        if (currentPoint.nodes.Contains(goal))
+        if (currentPoint.neighbours.Contains(goal))
         {
             currentRoute = AddToList(goal, currentRoute);
             return currentRoute;
         }
 
-        //Search nodes for best route
+        //Search neighbours for best route
         List<NavigationPoint> bestRoute = new List<NavigationPoint>();
-        foreach (NavigationPoint neighbourNode in currentPoint.nodes)
+        foreach (NavigationPoint neighbourNode in currentPoint.neighbours)
         {
             List<NavigationPoint> route = new List<NavigationPoint>();
 
@@ -96,7 +100,12 @@ public class Navigator : MonoBehaviour
 
         return null;
     }
+    #endregion
 
+    /// <summary>
+    /// Hightlight rooms based on the givne value.
+    /// </summary>
+    /// <param name="highlight">True if rooms should be highlighted.</param>
     public void HighlightRooms(bool highlight)
     {
         foreach (Room room in rooms)
@@ -104,7 +113,9 @@ public class Navigator : MonoBehaviour
             room.HighlightRoom(highlight);
         }
     }
+    #endregion
 
+    #region Private Methods
     /// <summary>
     /// Adds given node to list.
     /// Creates list if given list was null.
@@ -121,4 +132,5 @@ public class Navigator : MonoBehaviour
         currentRoute.Add(point);
         return currentRoute;
     }
+    #endregion
 }

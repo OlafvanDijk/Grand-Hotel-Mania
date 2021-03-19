@@ -1,26 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(LevelManager))]
 public class Timer : MonoBehaviour
 {
+    [Header("UI")]
     [Tooltip("Textfield that shows the minutes and seconds left of the timer")]
     [SerializeField] private TextMeshProUGUI timerText;
     [Tooltip("Clock image that displays how much time has passed")]
     [SerializeField] private Image clockImage;
 
-    private LevelManager levelManager;
-
     private float time;
     private float timeRemaining;
     private bool timerIsRunning = false;
 
+    private LevelManager levelManager;
+
+    #region Unity Methods
     /// <summary>
-    /// Get the time for the current level and set local variables
+    /// Get the time for the current level and set local variables.
     /// </summary>
     private void Start()
     {
@@ -31,7 +30,7 @@ public class Timer : MonoBehaviour
     }
 
     /// <summary>
-    /// Update timer + UI clock if timer is running
+    /// Update timer + UI clock if timer is running.
     /// </summary>
     private void Update()
     {
@@ -50,9 +49,11 @@ public class Timer : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Public Methods
     /// <summary>
-    /// Start the timer
+    /// Start the timer.
     /// </summary>
     public void StartTimer()
     {
@@ -61,16 +62,18 @@ public class Timer : MonoBehaviour
 
     /// <summary>
     /// Stop the timer
-    /// This method does not reset the timer
+    /// This method does not reset the timer.
     /// </summary>
     public void StopTimer()
     {
         timerIsRunning = false;
     }
+    #endregion
 
+    #region Private Methods
     /// <summary>
-    /// Updates the timer on the screen
-    /// This includes setting a text field and the fillamount of the clock image
+    /// Updates the timer on the screen.
+    /// This includes setting a text field and the fillamount of the clock image.
     /// </summary>
     private void UpdateTimer()
     {
@@ -92,4 +95,5 @@ public class Timer : MonoBehaviour
             clockImage.fillAmount = 0;
         }
     }
+    #endregion
 }
