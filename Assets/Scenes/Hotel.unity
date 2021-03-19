@@ -365,11 +365,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
-  - {fileID: 176770604}
+  neighbours:
   - {fileID: 1101934366}
+  - {fileID: 176770604}
   - {fileID: 1298119975}
-  position: {x: 0, y: 0}
 --- !u!1 &106931193
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,11 +949,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navigationPoint: {fileID: 182873540}
-  availableToGuests: 1
   closedDoor: {fileID: 1230878493}
   cleaningSign: {fileID: 1743233112}
   highlightObject: {fileID: 2022013459}
   desk: {fileID: 1264654605}
+  availableToGuests: 1
   shouldClean: 0
 --- !u!61 &171007920
 BoxCollider2D:
@@ -1025,10 +1024,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
+  neighbours:
   - {fileID: 1560042019}
   - {fileID: 98299696}
-  position: {x: 0, y: 0}
 --- !u!1 &182873539
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,9 +1056,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
+  neighbours:
   - {fileID: 1101934366}
-  position: {x: 0, y: 0}
 --- !u!4 &182873541
 Transform:
   m_ObjectHideFlags: 0
@@ -1118,10 +1115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
+  neighbours:
   - {fileID: 1560042019}
   - {fileID: 897256494}
-  position: {x: 0, y: 0}
 --- !u!1 &216521324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1548,7 +1544,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemTypeImages: {fileID: 11400000, guid: c23b607c9fca2e54b947fe7e5ccf4b61, type: 2}
   itemImage: {fileID: 238234255}
-  itemType: 0
 --- !u!1 &256978173
 GameObject:
   m_ObjectHideFlags: 0
@@ -2576,11 +2571,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navigationPoint: {fileID: 1745347437}
-  availableToGuests: 1
   closedDoor: {fileID: 6998413}
   cleaningSign: {fileID: 1202384779}
   highlightObject: {fileID: 1672303923}
   desk: {fileID: 1264654605}
+  availableToGuests: 1
   shouldClean: 0
 --- !u!61 &377160290
 BoxCollider2D:
@@ -3017,11 +3012,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navigationPoint: {fileID: 1101934366}
-  availableToGuests: 1
   closedDoor: {fileID: 1906657847}
   cleaningSign: {fileID: 268283273}
   highlightObject: {fileID: 1385609796}
   desk: {fileID: 1264654605}
+  availableToGuests: 1
   shouldClean: 0
 --- !u!61 &398408904
 BoxCollider2D:
@@ -3222,9 +3217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
+  neighbours:
   - {fileID: 1193462591}
-  position: {x: 0, y: 0}
 --- !u!1 &433031985
 GameObject:
   m_ObjectHideFlags: 0
@@ -3340,7 +3334,6 @@ MonoBehaviour:
   objectiveHandler: {fileID: 460350613}
   moneyMadeText: {fileID: 2047592708}
   moneyOwnedText: {fileID: 1988538968}
-  levelMoney: 0
 --- !u!4 &460350612
 Transform:
   m_ObjectHideFlags: 0
@@ -3789,7 +3782,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemTypeImages: {fileID: 11400000, guid: c23b607c9fca2e54b947fe7e5ccf4b61, type: 2}
   itemImage: {fileID: 1048839819}
-  itemType: 0
 --- !u!1 &558372264
 GameObject:
   m_ObjectHideFlags: 0
@@ -4255,9 +4247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
+  neighbours:
   - {fileID: 1745347437}
-  position: {x: 0, y: 0}
 --- !u!4 &667090519
 Transform:
   m_ObjectHideFlags: 0
@@ -4315,10 +4306,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
+  neighbours:
   - {fileID: 1089741139}
   - {fileID: 1193462591}
-  position: {x: 0, y: 0}
 --- !u!1 &682173873
 GameObject:
   m_ObjectHideFlags: 0
@@ -5150,11 +5140,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
+  neighbours:
+  - {fileID: 195462824}
   - {fileID: 1745347437}
   - {fileID: 1712189586}
-  - {fileID: 195462824}
-  position: {x: 0, y: 0}
 --- !u!1 &910135234
 GameObject:
   m_ObjectHideFlags: 0
@@ -6060,9 +6049,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
+  neighbours:
   - {fileID: 680496458}
-  position: {x: 0, y: 0}
 --- !u!114 &1089741140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6105,10 +6093,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
-  - {fileID: 98299696}
+  neighbours:
   - {fileID: 182873540}
-  position: {x: 0, y: 0}
+  - {fileID: 98299696}
 --- !u!4 &1101934367
 Transform:
   m_ObjectHideFlags: 0
@@ -6439,11 +6426,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
+  neighbours:
   - {fileID: 680496458}
   - {fileID: 421218733}
   - {fileID: 1560042019}
-  position: {x: 0, y: 0}
 --- !u!1 &1202384779
 GameObject:
   m_ObjectHideFlags: 0
@@ -7551,10 +7537,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
+  neighbours:
   - {fileID: 98299696}
   - {fileID: 2145460240}
-  position: {x: 0, y: 0}
 --- !u!1 &1298430637
 GameObject:
   m_ObjectHideFlags: 0
@@ -8986,11 +8971,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
+  neighbours:
   - {fileID: 1193462591}
   - {fileID: 176770604}
   - {fileID: 195462824}
-  position: {x: 0, y: 0}
 --- !u!1 &1591748408
 GameObject:
   m_ObjectHideFlags: 0
@@ -9356,11 +9340,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navigationPoint: {fileID: 667090518}
-  availableToGuests: 1
   closedDoor: {fileID: 1845758278}
   cleaningSign: {fileID: 1854065255}
   highlightObject: {fileID: 1359995949}
   desk: {fileID: 1264654605}
+  availableToGuests: 1
   shouldClean: 0
 --- !u!61 &1652143650
 BoxCollider2D:
@@ -9692,10 +9676,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
+  neighbours:
   - {fileID: 897256494}
   - {fileID: 2145460240}
-  position: {x: 0, y: 0}
 --- !u!1 &1721362630
 GameObject:
   m_ObjectHideFlags: 0
@@ -9884,10 +9867,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
+  neighbours:
   - {fileID: 897256494}
   - {fileID: 667090518}
-  position: {x: 0, y: 0}
 --- !u!4 &1745347438
 Transform:
   m_ObjectHideFlags: 0
@@ -11484,7 +11466,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  currentLevel: {fileID: 0}
 --- !u!4 &1994946997
 Transform:
   m_ObjectHideFlags: 0
@@ -12334,10 +12315,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07d3bb1f74134287d9d611cb6397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
+  neighbours:
   - {fileID: 1298119975}
   - {fileID: 1712189586}
-  position: {x: 0, y: 0}
 --- !u!1 &2761909601849860289
 GameObject:
   m_ObjectHideFlags: 0
