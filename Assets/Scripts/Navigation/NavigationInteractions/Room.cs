@@ -93,7 +93,7 @@ public class Room : NavigationInteraction
     private IEnumerator RestingGuest()
     {
         //TODO ASK FOR COFFEE?
-        yield return new WaitForSecondsRealtime(4f);
+        yield return new WaitForSeconds(4f);
         SendGuestToDesk();
         DoorState(true);
         ShouldClean(true, true);
@@ -101,7 +101,7 @@ public class Room : NavigationInteraction
 
     private IEnumerator CleanRoom(Bellhop bellhop)
     {
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSeconds(2f);
         ShouldClean(false, false);
         availableToGuests = true;
         bellhop.itemManager.RemoveItemFromHands(ItemType.CleaningSupplies);

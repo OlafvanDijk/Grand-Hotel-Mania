@@ -15,6 +15,7 @@ public class ObjectiveHandler : MonoBehaviour
 
     private ObjectiveObject currentObjective;
     private int objectiveProgress;
+    private bool objectiveReached = false;
 
     private void Start()
     {
@@ -34,13 +35,18 @@ public class ObjectiveHandler : MonoBehaviour
         }
 
         currentProgressText.text = objectiveProgress.ToString();
-        if (objectiveProgress < progressBar.maxValue)
+        if (!objectiveReached)
         {
-            progressBar.value = objectiveProgress;
-        }
-        else
-        {
-            progressBar.value = progressBar.maxValue;
+            if (objectiveProgress < progressBar.maxValue)
+            {
+                progressBar.value = objectiveProgress;
+            }
+            else
+            {
+                objectiveReached = true;
+                progressBar.value = progressBar.maxValue;
+                levelManager.ObjectiveReached(objectiveReached);
+            }
         }
     }
 }

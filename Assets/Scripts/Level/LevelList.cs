@@ -21,10 +21,8 @@ public class LevelList : ScriptableObject
         {
             return levels[index];
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            Debug.LogError(e.Message, this);
-
             if (levels.Count > 0)
                 return levels[levels.Count - 1];
 

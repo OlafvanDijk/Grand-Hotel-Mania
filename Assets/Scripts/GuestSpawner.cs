@@ -3,37 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-[RequireComponent(typeof(LevelManager))]
 public class GuestSpawner : MonoBehaviour
 {
     [Header("Guests")]
-    [Tooltip("Prefab of the Guest GameObject")]
+    [Tooltip("Prefab of the Guest GameObject.")]
     [SerializeField] private GameObject guestPrefab;
-    [Tooltip("GameObject that will act as the Parent of the Guest GameObject")]
+    [Tooltip("GameObject that will act as the Parent of the Guest GameObject.")]
     [SerializeField] private Transform guestParent;
-    [Tooltip("Spawnpoint of the guests")]
+    [Tooltip("Spawnpoint of the guests.")]
     [SerializeField] private NavigationInteraction spawnpoint;
-    [Tooltip("Displays how many more guests will spawn")]
+    [Tooltip("Displays how many more guests will spawn.")]
     [SerializeField] private TextMeshProUGUI guestsText;
 
     [Header("Other")]
-    [Tooltip("Location to walk towards when a guest spawns")]
+    [Tooltip("Location to walk towards when a guest spawns.")]
     [SerializeField] private NavigationInteraction desk;
-    [Tooltip("Navigator to navigate the guests")]
+    [Tooltip("Navigator to navigate the guests.")]
     [SerializeField] private Navigator navigator;
-
-    private LevelManager levelManager;
+    [Tooltip("Used for current level information.")]
+    [SerializeField] private LevelManager levelManager;
 
     private int guestsToServe;
     private Vector2 minMaxTimeNextGuest;
     private List<Guest> guests = new List<Guest>();
 
     /// <summary>
-    /// Get the current level if there is one and set local variables
+    /// Get the current level if there is one and set local variables.
     /// </summary>
     private void Start()
     {
-        levelManager = GetComponent<LevelManager>();
         if (levelManager.currentLevel)
         {
             guestsToServe = levelManager.currentLevel.amountOfGuests;
@@ -43,27 +41,54 @@ public class GuestSpawner : MonoBehaviour
     }
 
     /// <summary>
-    /// Start Spawning guests by calling the SpawnNextGuest Coroutine
+    /// Start Spawning guests by calling the SpawnNextGuest Coroutine.
     /// </summary>
     public void StartSpawningGuests()
     {
         StartCoroutine(SpawnNextGuest());
     }
+    
+    /// <summary>
+    /// Stop the spawining of the guests.
+    /// </summary>
+    public void StopSpawningGuests()
+    {
+        StopAllCoroutines();
+    }
 
     /// <summary>
-    /// Start Spawning guests by stopping all the Coroutines
+    /// Enable the guests to move.
+    /// </summary>
+    public void StartGuests()
+    {
+        foreach (Guest guest in guests)
+        {
+            guest.EnableMoving();
+        }
+    }
+
+    /// <summary>
+    /// Stop all the guests from moving.
     /// </summary>
     public void StopGuests()
     {
-        StopAllCoroutines();
         foreach (Guest guest in guests)
         {
             guest.StopFromMoving();
         }
     }
 
+    public void GuestLeft(Guest guest)
+    {
+        guests.Remove(guest);
+        if (guests.Count <= 0)
+        {
+            levelManager.EndGame();
+        }
+    }
+
     /// <summary>
-    /// Spawn Guest and have the guest walk to the desk
+    /// Spawn Guest and have the guest walk to the desk.
     /// </summary>
     private void SpawnGuest()
     {
@@ -72,7 +97,7 @@ public class GuestSpawner : MonoBehaviour
         GameObject guestObject = Instantiate(guestPrefab, position, Quaternion.Euler(Vector3.zero), guestParent);
         Guest guestScript = guestObject.GetComponent<Guest>();
         guests.Add(guestScript);
-        guestScript.InitializedGuest(navigator, spawnpoint);
+        guestScript.InitializedGuest(navigator, spawnpoint, this);
         guestScript.currentPosition = position;
         List<Vector2> positions = new List<Vector2>() { desk.navigationPoint.position };
         guestScript.SetRoute(positions, desk);
@@ -80,7 +105,7 @@ public class GuestSpawner : MonoBehaviour
     }
 
     /// <summary>
-    /// Coroutine that spawns a guest and calls itself after waiting for a certain amount of time until no guests are left to spawn
+    /// Coroutine that spawns a guest and calls itself after waiting for a certain amount of time until no guests are left to spawn.
     /// </summary>
     /// <returns></returns>
     private IEnumerator SpawnNextGuest()
@@ -89,7 +114,7 @@ public class GuestSpawner : MonoBehaviour
         {
             SpawnGuest();
             float secondsToWait = Random.Range(minMaxTimeNextGuest.x, minMaxTimeNextGuest.y);
-            yield return new WaitForSecondsRealtime(secondsToWait);
+            yield return new WaitForSeconds(secondsToWait);
             StartCoroutine(SpawnNextGuest());
         }
     }

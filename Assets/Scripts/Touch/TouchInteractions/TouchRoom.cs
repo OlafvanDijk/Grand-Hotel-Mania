@@ -29,6 +29,10 @@ public class TouchRoom : TouchInteraction
             }
         }
 
-        selectedGuest = null;
+        if (selectedGuest)
+        {
+            selectedGuest.navigator.HighlightRooms(false);
+            selectedGuest = null;
+        }
     }
 }

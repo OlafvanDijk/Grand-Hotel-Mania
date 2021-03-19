@@ -44,7 +44,7 @@ public class Timer : MonoBehaviour
             }
             else
             {
-                Debug.Log("GameOver");
+                levelManager.EndGame();
                 timeRemaining = 0;
                 timerIsRunning = false;
             }

@@ -77,4 +77,10 @@ public class NavigationObject : MonoBehaviour
         canMove = false;
         //Here is where you should stop the animator if there is one
     }
+
+    public void EnableMoving()
+    {
+        canMove = true;
+        //Here is where you should start the animator if there is one
+    }
 }

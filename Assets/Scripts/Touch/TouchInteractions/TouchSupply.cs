@@ -9,6 +9,12 @@ public class TouchSupply : TouchInteraction
         {
             NavigationInteraction supply = collider.GetComponent<NavigationInteraction>();
             bellhop.AddInteractionToQueue(supply);
+
+            if (selectedGuest)
+            {
+                selectedGuest.navigator.HighlightRooms(false);
+                selectedGuest = null;
+            }
         }
     }
 }

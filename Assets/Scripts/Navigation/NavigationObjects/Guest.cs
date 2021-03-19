@@ -23,7 +23,8 @@ public class Guest : NavigationObject
     private SpriteRenderer spriteRenderer;
     private Collider2D collider;
     private NavigationInteraction exit;
-    
+    private GuestSpawner guestSpawner;
+
     /// <summary>
     /// Set Sprite of the Guest
     /// </summary>
@@ -33,10 +34,16 @@ public class Guest : NavigationObject
         SetSprite();
     }
 
-    public void InitializedGuest(Navigator navigator, NavigationInteraction exit)
+    private void OnDestroy()
+    {
+        guestSpawner.GuestLeft(this);
+    }
+
+    public void InitializedGuest(Navigator navigator, NavigationInteraction exit, GuestSpawner guestSpawner)
     {
         this.navigator = navigator;
         this.exit = exit;
+        this.guestSpawner = guestSpawner;
     }
 
     public void CheckIn()

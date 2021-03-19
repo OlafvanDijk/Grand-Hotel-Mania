@@ -15,7 +15,7 @@ public class Supply : NavigationInteraction
 
     private IEnumerator GetSupplies(Bellhop bellhop)
     {
-        yield return new WaitForSecondsRealtime(secondsToWait);
+        yield return new WaitForSeconds(secondsToWait);
         bellhop.itemManager.AddItemToHands(ItemType.CleaningSupplies);
         bellhop.Interacted.Invoke();
     }
